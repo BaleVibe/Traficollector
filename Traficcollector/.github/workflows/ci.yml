@@ -35,22 +35,27 @@ jobs:
     - name: Validate Gradle wrapper
       run: ./gradlew --version
 
-    - name: Run tests
-      run: ./gradlew test --continue
+    - name: Run tests (if they exist)
+      run: |
+        if [ -d "app/src/test" ] || [ -d "src/test" ]; then
+          ./gradlew test --continue
+        else
+          echo "No test directories found, skipping tests"
+        fi
 
     - name: Run lint
       run: ./gradlew lint
 
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
+    - name: Upload test results (if they exist)
       if: always()
+      uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: app/build/reports/tests/
 
     - name: Upload lint results
-      uses: actions/upload-artifact@v4
       if: always()
+      uses: actions/upload-artifact@v4
       with:
         name: lint-results
         path: app/build/reports/lint-results.html
