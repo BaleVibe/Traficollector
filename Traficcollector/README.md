@@ -128,3 +128,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 This application is designed for educational and testing purposes only. Users are responsible for ensuring compliance with applicable laws and regulations when monitoring network traffic. The developers are not responsible for any misuse of this application.# Repository structure fixed - Thu Nov 13 18:24:53 UTC 2025
 # GitHub Actions test - Thu Nov 13 18:45:49 UTC 2025
 # GitHub Actions final test - Thu Nov 13 18:47:37 UTC 2025
+# Repository cleaned and structured - Thu Nov 13 19:24:58 UTC 2025
