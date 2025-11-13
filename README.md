@@ -1,141 +1,128 @@
-# 🚀 Welcome to Z.ai Code Scaffold
+# Traficcollector
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
+A comprehensive Android application for monitoring and collecting network traffic from selected applications using VPNService.
 
-## ✨ Technology Stack
+## Features
 
-This scaffold provides a robust foundation built with:
+- **App Selection**: Choose any installed application to monitor its network traffic
+- **Monitoring Modes**: 
+  - Simple Mode: Basic connection information (endpoints, ports, protocols)
+  - Full Mode: Complete packet data including raw bytes
+- **Real-time Monitoring**: Live traffic collection and display
+- **Traffic Analysis**: View detailed information about each network connection
+- **Data Export**: Export collected data to CSV format
+- **Clean UI**: Modern Material Design interface with intuitive navigation
 
-### 🎯 Core Framework
-- **⚡ Next.js 15** - The React framework for production with App Router
-- **📘 TypeScript 5** - Type-safe JavaScript for better developer experience
-- **🎨 Tailwind CSS 4** - Utility-first CSS framework for rapid UI development
+## Technical Implementation
 
-### 🧩 UI Components & Styling
-- **🧩 shadcn/ui** - High-quality, accessible components built on Radix UI
-- **🎯 Lucide React** - Beautiful & consistent icon library
-- **🌈 Framer Motion** - Production-ready motion library for React
-- **🎨 Next Themes** - Perfect dark mode in 2 lines of code
+### Core Components
 
-### 📋 Forms & Validation
-- **🎣 React Hook Form** - Performant forms with easy validation
-- **✅ Zod** - TypeScript-first schema validation
+1. **VPNService**: Implements Android's VpnService to intercept network traffic
+2. **Traffic Parser**: Analyzes network packets and extracts relevant information
+3. **Data Storage**: In-memory storage with configurable limits
+4. **UI Components**: Material Design with RecyclerView for efficient data display
 
-### 🔄 State Management & Data Fetching
-- **🐻 Zustand** - Simple, scalable state management
-- **🔄 TanStack Query** - Powerful data synchronization for React
-- **🌐 Axios** - Promise-based HTTP client
+### Network Traffic Collection
 
-### 🗄️ Database & Backend
-- **🗄️ Prisma** - Next-generation Node.js and TypeScript ORM
-- **🔐 NextAuth.js** - Complete open-source authentication solution
+The app uses Android's VPNService to create a local VPN that intercepts network traffic. Key features:
 
-### 🎨 Advanced UI Features
-- **📊 TanStack Table** - Headless UI for building tables and datagrids
-- **🖱️ DND Kit** - Modern drag and drop toolkit for React
-- **📊 Recharts** - Redefined chart library built with React and D3
-- **🖼️ Sharp** - High performance image processing
+- **IP Header Parsing**: Extracts source/destination IPs, ports, and protocols
+- **Protocol Support**: Handles TCP, UDP, and ICMP protocols
+- **Real-time Processing**: Processes packets as they flow through the VPN
+- **Data Filtering**: Filters traffic based on selected application
 
-### 🌍 Internationalization & Utilities
-- **🌍 Next Intl** - Internationalization library for Next.js
-- **📅 Date-fns** - Modern JavaScript date utility library
-- **🪝 ReactUse** - Collection of essential React hooks for modern development
+### Data Model
 
-## 🎯 Why This Scaffold?
+```kotlin
+data class TrafficData(
+    val timestamp: Long,
+    val sourceIp: String,
+    val destIp: String,
+    val sourcePort: Int,
+    val destPort: Int,
+    val protocol: String,
+    val dataLength: Int,
+    val direction: String, // OUTGOING or INCOMING
+    val rawData: ByteArray? = null // Full mode only
+)
+```
 
-- **🏎️ Fast Development** - Pre-configured tooling and best practices
-- **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
-- **🔒 Type Safety** - Full TypeScript configuration with Zod validation
-- **📱 Responsive** - Mobile-first design principles with smooth animations
-- **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
-- **🔐 Auth Included** - NextAuth.js for secure authentication flows
-- **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
-- **🌍 i18n Ready** - Multi-language support with Next Intl
-- **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
+## Installation
 
-## 🚀 Quick Start
+### Prerequisites
+
+- Android 7.0 (API level 24) or higher
+- VPN permissions (granted in-app)
+
+### Build from Source
+
+1. Clone the repository
+2. Open in Android Studio
+3. Build and run the project
+
+Or use the command line:
 
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
+./gradlew assembleDebug
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your application running.
+## Usage
 
-## 🤖 Powered by Z.ai
+1. **Select Application**: Choose the app you want to monitor from the list of installed applications
+2. **Choose Monitoring Mode**: Select Simple or Full mode depending on your needs
+3. **Start Monitoring**: Grant VPN permission and begin traffic collection
+4. **View Data**: Browse collected traffic data in real-time
+5. **Export Results**: Export data to CSV for further analysis
 
-This scaffold is optimized for use with [Z.ai](https://chat.z.ai) - your AI assistant for:
+## Permissions
 
-- **💻 Code Generation** - Generate components, pages, and features instantly
-- **🎨 UI Development** - Create beautiful interfaces with AI assistance  
-- **🔧 Bug Fixing** - Identify and resolve issues with intelligent suggestions
-- **📝 Documentation** - Auto-generate comprehensive documentation
-- **🚀 Optimization** - Performance improvements and best practices
+The app requires the following permissions:
 
-Ready to build something amazing? Start chatting with Z.ai at [chat.z.ai](https://chat.z.ai) and experience the future of AI-powered development!
+- `INTERNET`: Network access
+- `ACCESS_NETWORK_STATE`: Check network connectivity
+- `VPN_SERVICE`: Create VPN for traffic interception
+- `FOREGROUND_SERVICE`: Run monitoring service in foreground
+- `PACKAGE_USAGE_STATS`: Get installed applications list
 
-## 📁 Project Structure
+## Security & Privacy
+
+- **Local Processing**: All traffic processing happens locally on the device
+- **No External Servers**: No data is sent to external servers
+- **User Control**: User has full control over what data is collected
+- **Transparent Operation**: Open-source code for complete transparency
+
+## Architecture
 
 ```
-src/
-├── app/                 # Next.js App Router pages
-├── components/          # Reusable React components
-│   └── ui/             # shadcn/ui components
-├── hooks/              # Custom React hooks
-└── lib/                # Utility functions and configurations
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   UI Layer     │    │  Business Logic  │    │   Data Layer    │
+│                 │    │                  │    │                 │
+│ - Activities    │◄──►│ - VPN Service    │◄──►│ - Traffic Store │
+│ - Adapters      │    │ - Packet Parser  │    │ - App Cache     │
+│ - ViewModels    │    │ - Data Manager   │    │ - Export Utils  │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
 
-## 🎨 Available Features & Components
+## GitHub Actions
 
-This scaffold includes a comprehensive set of modern web development tools:
+The project includes automated workflows for:
 
-### 🧩 UI Components (shadcn/ui)
-- **Layout**: Card, Separator, Aspect Ratio, Resizable Panels
-- **Forms**: Input, Textarea, Select, Checkbox, Radio Group, Switch
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
-- **Navigation**: Breadcrumb, Menubar, Navigation Menu, Pagination
-- **Overlay**: Dialog, Sheet, Popover, Tooltip, Hover Card
-- **Data Display**: Badge, Avatar, Calendar
+- **Continuous Integration**: Run tests and lint on every push/PR
+- **APK Generation**: Automatically build and release APKs
+- **Artifact Storage**: Store build artifacts for download
 
-### 📊 Advanced Data Features
-- **Tables**: Powerful data tables with sorting, filtering, pagination (TanStack Table)
-- **Charts**: Beautiful visualizations with Recharts
-- **Forms**: Type-safe forms with React Hook Form + Zod validation
+## Contributing
 
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
-### 🔐 Backend Integration
-- **Authentication**: Ready-to-use auth flows with NextAuth.js
-- **Database**: Type-safe database operations with Prisma
-- **API Client**: HTTP requests with Axios + TanStack Query
-- **State Management**: Simple and scalable with Zustand
+## License
 
-### 🌍 Production Features
-- **Internationalization**: Multi-language support with Next Intl
-- **Image Optimization**: Automatic image processing with Sharp
-- **Type Safety**: End-to-end TypeScript with Zod validation
-- **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🤝 Get Started with Z.ai
+## Disclaimer
 
-1. **Clone this scaffold** to jumpstart your project
-2. **Visit [chat.z.ai](https://chat.z.ai)** to access your AI coding assistant
-3. **Start building** with intelligent code generation and assistance
-4. **Deploy with confidence** using the production-ready setup
-
----
-
-Built with ❤️ for the developer community. Supercharged by [Z.ai](https://chat.z.ai) 🚀
+This application is designed for educational and testing purposes only. Users are responsible for ensuring compliance with applicable laws and regulations when monitoring network traffic. The developers are not responsible for any misuse of this application.# Repository structure fixed - Thu Nov 13 18:24:53 UTC 2025
