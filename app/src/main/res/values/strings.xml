@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Traficcollector</string>
+    <string name="select_app">Select App</string>
+    <string name="start_monitoring">Start Monitoring</string>
+    <string name="stop_monitoring">Stop Monitoring</string>
+    <string name="simple_mode">Simple Mode</string>
+    <string name="full_mode">Full Mode</string>
+    <string name="monitoring_mode">Monitoring Mode</string>
+    <string name="selected_app">Selected App</string>
+    <string name="no_app_selected">No App Selected</string>
+    <string name="traffic_data">Traffic Data</string>
+    <string name="endpoint">Endpoint</string>
+    <string name="port">Port</string>
+    <string name="protocol">Protocol</string>
+    <string name="data_size">Data Size</string>
+    <string name="timestamp">Timestamp</string>
+    <string name="direction_outgoing">Outgoing</string>
+    <string name="direction_incoming">Incoming</string>
+    <string name="vpn_permission_required">VPN Permission Required</string>
+    <string name="vpn_permission_description">This app needs VPN permission to monitor network traffic. The VPN service runs locally on your device and does not route traffic through external servers.</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear_data">Clear Data</string>
+    <string name="export_data">Export Data</string>
+    <string name="no_data_available">No traffic data available</string>
+    <string name="monitoring_active">Monitoring Active</string>
+    <string name="monitoring_inactive">Monitoring Inactive</string>
+    <string name="connection_details">Connection Details</string>
+    <string name="raw_data">Raw Data</string>
+    <string name="close">Close</string>
+</resources>
